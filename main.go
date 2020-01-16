@@ -56,6 +56,7 @@ const (
 //    // import _ "github.com/jinzhu/gorm/dialects/sqlite"
 //    // import _ "github.com/jinzhu/gorm/dialects/mssql"
 func Open(dialect string, args ...interface{}) (db *DB, err error) {
+	fmt.Sprintf("===========>(gorm.go) Opening database %s at %s\n", dialect, args);
 	if len(args) == 0 {
 		err = errors.New("invalid database source")
 		return nil, err
@@ -73,7 +74,9 @@ func Open(dialect string, args ...interface{}) (db *DB, err error) {
 			driver = value
 			source = args[1].(string)
 		}
+		fmt.Sprint("===========>(gorm.go) Calling sql.Open()\n")
 		dbSQL, err = sql.Open(driver, source)
+		fmt.Sprintf("===========>(gorm.go) dbSQL: %+v, err: %+v\n", dbSQL, err)
 		ownDbSQL = true
 	case SQLCommon:
 		dbSQL = value
